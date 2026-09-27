@@ -77,7 +77,6 @@ plt.setp(ax.get_xticklabels() + ax.get_yticklabels(),
 # Create titles.
 ax.set_xlabel(r"Period ($\mathbf{years^2}$)", fontsize=14, weight="bold", color="0.2")
 ax.set_ylabel(r"Semi-major axis ($\mathbf{AU^3}$)", fontsize=14, weight="bold", color="0.2")
-ax.set_title("Kepler's Third Law for Saturn's Moons", fontsize=14, weight="bold", color="0.2")
 
 ax.legend(frameon=False, prop={"weight": "bold", "size": 12}, labelcolor="0.2")
 
