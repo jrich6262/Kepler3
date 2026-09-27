@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+
+\title{\textbf{Demonstrating Kepler's Third Law with NASA JPL Horizons Data}}
+\author{Joseph Richmond}
+\date{September 27, 2026}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This project demonstrates Kepler’s third law of planetary motion ($T^2 \propto a^3$) using the NASA Jet Propulsion Laboratory (JPL) Horizons database. Variables, including semi-major axis ($a$) and mean motion ($n$), were retrieved for all planets in the Solar System and eight major moons of Saturn to calculate orbital periods ($T$). The results were then compared ($\log T^2$ vs. $\log a^3$) and evaluated using linear regression. Both systems resulted in a correlation coefficient of $R^2=1.0000$, which successfully demonstrated the relationship.
+\end{abstract}
+
+\section{Introduction}
+Kepler's Third Law states that the square of a satellite's orbital period ($T$) is  proportional to the cube of the semi-major axis ($a$) of its orbit:
+\begin{equation}
+    T^2 \propto a^3
+\end{equation}
+
+This equation was generalized by Isaac Newton using the law of gravitation \cite{carroll2017}, which takes into account the masses of the primary body ($M$) and the satellite ($m$):
+\begin{equation}
+    T^2 = \left( \frac{4\pi^2}{G(M + m)} \right) a^3
+\end{equation}
+
+where $G$ is the gravitational constant ($6.674 \times 10^{-11} \text{ m}^3\text{kg}^{-1}\text{s}^{-2}$). The objective of this project was to use data from NASA's JPL Horizons system via the \texttt{astroquery.jplhorizons} Python package to demonstrate this relationship in two different systems.
+
+\section{Methodology}
+
+\subsection{Data Retrieval}
+For each body, the elements table was queried using \texttt{Horizons.elements()} to retrieve the semi-major axis (in AU) and mean motion (in degrees/day).
+\begin{enumerate}
+    \item \textbf{Solar:} The 8 major planets from Mercury to Neptune, with Horizons IDs \texttt{199} to \texttt{899}, relative to the sun (\texttt{@sun}).
+    \item \textbf{Saturn:} 8 moons of Saturn, with Horizons IDs \texttt{601} through \texttt{608}, relative to Saturn (\texttt{@699}).
+\end{enumerate}
+
+\subsection{Orbital Period}
+Orbital period ($T$) in sidereal years was derived from mean motion ($n$) using:
+\begin{equation}
+    T = \frac{360^\circ / n}{365.2564}
+\end{equation}
+
+\subsection{Linearization}
+Because the data points spanned multiple orders of magnitude, axes were logarithmic:
+\begin{equation}
+    x = \log(T^2), \quad y = \log(a^3)
+\end{equation}
+
+The correlation coefficient ($R^2$) was evaluated using \texttt{np.corrcoef()}.
+
+\section{Results}
+
+\subsection{Solar System}
+Analysis of the 8 major planets yielded a linear relationship with $R^2 = 1.0000$, as shown in Figure 1.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\linewidth]{MAJOR_BODIES.pdf}
+    \caption{Relationship between period squared ($T^2$) and semi-major axis cubed ($a^3$) for the planets.}
+    \label{fig:major_bodies}
+\end{figure}
+
+\subsection{Saturn System}
+Analysis of the 8 moons  yielded a linear relationship with $R^2 = 1.0000$, as shown in Figure 2.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\linewidth]{SATURNS_MOONS.pdf}
+    \caption{Relationship between period squared ($T^2$) and semi-major axis cubed ($a^3$) for Saturn's moons.}
+    \label{fig:saturn_moons}
+\end{figure}
+
+\section{Discussion}
+
+The results successfully demonstrated that Kepler's Third Law holds true in various systems. The different slopes on the two graphs are due to the different masses of Saturn and the Sun, which effects the denominator $M+m$.
+
+\begin{thebibliography}{9}
+\bibitem{carroll2017}
+B.~W. Carroll and D.~A. Ostlie, \emph{An Introduction to Modern Astrophysics}, 2nd~ed. Cambridge University Press, 2017.
+\end{thebibliography}
+
+\end{document}
