@@ -1,6 +1,6 @@
 **Overview**
 
-This repository contains Python programs that demonstrate Kepler's Third Law. The programs calculate the relationship between orbital period and semi-major axis for the major bodies and Saturn's moons using data from NASA's JPL Horizons System.
+This repository contains Python programs that demonstrate Kepler's Third Law by calculating the relationship between orbital period and semi-major axis for the major bodies and Saturn's moons. Data is taken from NASA's JPL Horizons System.
 
 **Repository**
 
